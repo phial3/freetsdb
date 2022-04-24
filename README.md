@@ -133,8 +133,8 @@ Perform the following steps on each meta server**.
 **The Linux System**
 
 ```
-wget https://github.com/freetsdb/freetsdb/releases/download/v0.0.2-beta.1/freetsdb-v0.0.2-beta.1_linux_amd64.tar.gz
-tar -zxvf freetsdb-v0.0.2-beta.1_linux_amd64.tar.gz
+wget https://github.com/freetsdb/freetsdb/releases/download/v0.1.2/freetsdb-v0.1.2_linux_amd64.tar.gz
+tar -zxvf freetsdb-v0.1.2_linux_amd64.tar.gz
 ```
 
 ###### II. Edit the configuration file
@@ -168,11 +168,11 @@ sudo ./freetsd-meta -config ./freetsdb-meta.conf
 From one and only one meta node, join all meta nodes including itself. In our example, from **cluster-meta-node-01**, run:
 
 ```
-freetsd-ctl add-meta cluster-meta-node-01:8091
+./freetsd-ctl add-meta cluster-meta-node-01:8091
 
-freetsd-ctl add-meta cluster-meta-node-02:8091
+./freetsd-ctl add-meta cluster-meta-node-02:8091
 
-freetsd-ctl add-meta cluster-meta-node-03:8091
+./freetsd-ctl add-meta cluster-meta-node-03:8091
 ```
 
 > Note: Please make sure that you specify the fully qualified host name of the meta node during the join process. Please do not specify localhost as this can cause cluster connection issues.
@@ -188,7 +188,7 @@ Added meta node x at cluster-meta-node-0x:8091
 > Issue the following command on any meta node:
 >
 > ```
-> freetsd-ctl show
+> ./freetsd-ctl show
 > 
 > ```
 >
@@ -257,8 +257,8 @@ Perform the following steps on each data node.
 **The Linux System**
 
 ```
-wget https://github.com/freetsdb/freetsdb/releases/download/v0.0.2-beta.1/freetsdb-v0.0.2-beta.1_linux_amd64.tar.gz
-tar -zxvf freetsdb-v0.0.2-beta.1_linux_amd64.tar.gz
+wget https://github.com/freetsdb/freetsdb/releases/download/v0.1.2/freetsdb-v0.1.2_linux_amd64.tar.gz
+tar -zxvf freetsdb-v0.1.2_linux_amd64.tar.gz
 ```
 
 ###### II. Edit the data node configuration files
@@ -295,9 +295,9 @@ You should join your data nodes to the cluster only when you are adding a brand 
 On one and only one of the meta nodes that you set up in the previous document, run:
 
 ```
-freetsd-ctl add-data cluster-data-node-01:8088
+./freetsd-ctl add-data cluster-data-node-01:8088
 
-freetsd-ctl add-data cluster-data-node-02:8088
+./freetsd-ctl add-data cluster-data-node-02:8088
 ```
 
 The expected output is:
@@ -314,7 +314,7 @@ Run the add-data command once and only once for each data node you are joining t
 > Issue the following command on any meta node:
 >
 > ```
-> freetsd-ctl show
+> ./freetsd-ctl show
 > ```
 >
 > The expected output is:
