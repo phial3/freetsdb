@@ -1,4 +1,4 @@
-// Package backup implements both the backup and export subcommands for the freetsd-ctl command.
+// Package backup implements both the backup and export subcommands for the freetsd_ctl command.
 package backup
 
 import (
@@ -16,7 +16,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/backup_util"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_ctl/backup_util"
 	"github.com/freetsdb/freetsdb/services/snapshotter"
 	"github.com/freetsdb/freetsdb/tcp"
 	gzip "github.com/klauspost/pgzip"
@@ -34,7 +34,7 @@ const (
 	BackupFilePattern = "%s.%s.%05d"
 )
 
-// Command represents the program execution for "freetsd-ctl backup".
+// Command represents the program execution for "freetsd_ctl backup".
 type Command struct {
 	// The logger passed to the ticker during execution.
 	StdoutLogger *log.Logger
@@ -593,7 +593,7 @@ func (cmd *Command) printUsage() {
 	fmt.Fprintf(cmd.Stdout, `
 Creates a backup copy of specified FreeTSDB database(s) and saves the files to PATH (directory where backups are saved). 
 
-Usage: freetsd-ctl backup [options] PATH
+Usage: freetsd_ctl backup [options] PATH
 
     -portable
             Required to generate backup files in a portable format that can be restored to FreeTSDB 

@@ -1,3 +1,4 @@
+// Command freetsd_meta is the FreeTSDB server.
 package main
 
 import (
@@ -6,13 +7,13 @@ import (
 	"io"
 	"math/rand"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/freetsdb/freetsdb/cmd"
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/backup"
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/help"
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/node"
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/restore"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_meta/help"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_meta/run"
 )
 
 // These variables are populated via the Go linker.
@@ -67,34 +68,59 @@ func (m *Main) Run(args ...string) error {
 
 	// Extract name from args.
 	switch name {
-	case "", "help":
+	case "", "run":
+		cmd := run.NewCommand()
+
+		// Tell the server the build details.
+		cmd.Version = version
+		cmd.Commit = commit
+		cmd.Branch = branch
+
+		if err := cmd.Run(args...); err != nil {
+			return fmt.Errorf("run: %s", err)
+		}
+
+		signalCh := make(chan os.Signal, 1)
+		signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
+		cmd.Logger.Info("Listening for signals")
+
+		// Block until one of the signals above is received
+		<-signalCh
+		cmd.Logger.Info("Signal received, initializing clean shutdown...")
+		go cmd.Close()
+
+		// Block again until another signal is received, a shutdown timeout elapses,
+		// or the Command is gracefully closed
+		cmd.Logger.Info("Waiting for clean shutdown...")
+		select {
+		case <-signalCh:
+			cmd.Logger.Info("Second signal received, initializing hard shutdown")
+		case <-time.After(time.Second * 30):
+			cmd.Logger.Info("Time limit reached, initializing hard shutdown")
+		case <-cmd.Closed:
+			cmd.Logger.Info("Server shutdown completed")
+		}
+
+	case "config":
+		if err := run.NewPrintConfigCommand().Run(args...); err != nil {
+			return fmt.Errorf("config: %s", err)
+		}
+	case "version":
+		if err := NewVersionCommand().Run(args...); err != nil {
+			return fmt.Errorf("version: %s", err)
+		}
+	case "help":
 		if err := help.NewCommand().Run(args...); err != nil {
 			return fmt.Errorf("help: %s", err)
 		}
-
-	case "backup":
-		name := backup.NewCommand()
-		if err := name.Run(args...); err != nil {
-			return fmt.Errorf("backup: %s", err)
-		}
-	case "restore":
-		name := restore.NewCommand()
-		if err := name.Run(args...); err != nil {
-			return fmt.Errorf("restore: %s", err)
-		}
-	case "add-meta", "remove-meta", "add-data", "remove-data", "show":
-		cmd := node.NewCommand(name)
-		if err := cmd.Run(args...); err != nil {
-			return fmt.Errorf("%s: %s", name, err)
-		}
 	default:
-		return fmt.Errorf(`unknown command "%s"`+"\n"+`Run 'freetsd-ctl help' for usage`+"\n\n", name)
+		return fmt.Errorf(`unknown command "%s"`+"\n"+`Run 'freetsd_meta help' for usage`+"\n\n", name)
 	}
 
 	return nil
 }
 
-// VersionCommand represents the command executed by "freetsd-ctl version".
+// VersionCommand represents the command executed by "freetsd_meta version".
 type VersionCommand struct {
 	Stdout io.Writer
 	Stderr io.Writer
@@ -125,5 +151,5 @@ func (cmd *VersionCommand) Run(args ...string) error {
 
 var versionUsage = `Displays the FreeTSDB version, build branch and git commit hash.
 
-Usage: freetsd-ctl version
+Usage: freetsd_meta version
 `

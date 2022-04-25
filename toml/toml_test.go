@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	"github.com/google/go-cmp/cmp"
 	"github.com/freetsdb/freetsdb/cmd/freetsd/run"
 	itoml "github.com/freetsdb/freetsdb/toml"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestSize_UnmarshalText(t *testing.T) {
@@ -142,7 +142,7 @@ func TestGroup_UnmarshalTOML(t *testing.T) {
 
 func TestConfig_Encode(t *testing.T) {
 	var c run.Config
-	c.Cluster.WriteTimeout = itoml.Duration(time.Minute)
+	c.Coordinator.WriteTimeout = itoml.Duration(time.Minute)
 	buf := new(bytes.Buffer)
 	if err := toml.NewEncoder(buf).Encode(&c); err != nil {
 		t.Fatal("Failed to encode: ", err)

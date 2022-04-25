@@ -1,4 +1,4 @@
-// Package restore is the restore subcommand for the freetsd-ctl command,
+// Package restore is the restore subcommand for the freetsd_ctl command,
 // for restoring from a backup.
 package restore
 
@@ -18,13 +18,13 @@ import (
 
 	gzip "github.com/klauspost/pgzip"
 
-	"github.com/freetsdb/freetsdb/cmd/freetsd-ctl/backup_util"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_ctl/backup_util"
 	tarstream "github.com/freetsdb/freetsdb/pkg/tar"
 	"github.com/freetsdb/freetsdb/services/meta"
 	"github.com/freetsdb/freetsdb/services/snapshotter"
 )
 
-// Command represents the program execution for "freetsd-ctl restore".
+// Command represents the program execution for "freetsd_ctl restore".
 type Command struct {
 	// The logger passed to the ticker during execution.
 	StdoutLogger *log.Logger
@@ -347,7 +347,7 @@ func (cmd *Command) updateMetaPortable() error {
 
 }
 
-// updateMetaLive takes a metadata backup and sends it to the freetsd-ctl server
+// updateMetaLive takes a metadata backup and sends it to the freetsd_ctl server
 // for a live merger of metadata.
 func (cmd *Command) updateMetaLegacy() error {
 
@@ -568,7 +568,7 @@ func (cmd *Command) printUsage() {
 Uses backup copies from the specified PATH to restore databases or specific shards from FreeTSDB 
   to an FreeTSDB instance.
 
-Usage: freetsd-ctl restore -portable [options] PATH
+Usage: freetsd_ctl restore -portable [options] PATH
 
 Note: Restore using the '-portable' option consumes files in an improved Enterprise-compatible 
   format that includes a file manifest.

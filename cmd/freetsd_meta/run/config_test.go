@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	"github.com/freetsdb/freetsdb/cmd/freetsd-meta/run"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_meta/run"
 	freetstoml "github.com/freetsdb/freetsdb/toml"
 	"go.uber.org/zap/zapcore"
 	"golang.org/x/text/encoding/unicode"

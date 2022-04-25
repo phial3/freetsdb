@@ -70,7 +70,7 @@ func (cmd *Command) parseFlags(args []string) error {
 		cmd.RemoteNodeAddr = args[0]
 	} else if cmd.Cmd == "show" {
 
-	} else if cmd.Cmd == "freetsd-ctl" && len(args) > 0 && args[0] == "-h" {
+	} else if cmd.Cmd == "freetsd_ctl" && len(args) > 0 && args[0] == "-h" {
 		cmd.printUsage()
 	} else {
 		cmd.printUsage()

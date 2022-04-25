@@ -1,4 +1,4 @@
-// Package run is the run (default) subcommand for the freetsd-meta command.
+// Package run is the run (default) subcommand for the freetsd_meta command.
 package run
 
 import (
@@ -26,7 +26,7 @@ const logo = `
 
 `
 
-// Command represents the command executed by "freetsd-meta run".
+// Command represents the command executed by "freetsd_meta run".
 type Command struct {
 	Version   string
 	Branch    string
@@ -79,7 +79,7 @@ func (cmd *Command) Run(args ...string) error {
 
 	// Validate the configuration.
 	if err := config.Validate(); err != nil {
-		return fmt.Errorf("%s. To generate a valid configuration file run `freetsd-meta config > freetsdb.generated.conf`", err)
+		return fmt.Errorf("%s. To generate a valid configuration file run `freetsd_meta config > freetsdb.generated.conf`", err)
 	}
 
 	var logErr error
@@ -226,7 +226,7 @@ func (cmd *Command) ParseConfig(path string) (*Config, error) {
 	return config, nil
 }
 
-const usage = `usage: freetsd-meta [flags]
+const usage = `usage: freetsd_meta [flags]
 
 FreeTSDB Meta is a raft-based meta service for FreeTSDB.
 

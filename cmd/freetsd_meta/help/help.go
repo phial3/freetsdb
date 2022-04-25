@@ -1,4 +1,4 @@
-// Package help is the help subcommand of the freetsd-meta command.
+// Package help is the help subcommand of the freetsd_meta command.
 package help
 
 import (
@@ -27,7 +27,7 @@ func (cmd *Command) Run(args ...string) error {
 }
 
 const usage = `
-usage: freetsd-meta [flags]
+usage: freetsd_meta [flags]
 
 FreeTSDB Meta is a raft-based meta service for FreeTSDB.
 

@@ -9,7 +9,7 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-// PrintConfigCommand represents the command executed by "freetsd-meta config".
+// PrintConfigCommand represents the command executed by "freetsd_meta config".
 type PrintConfigCommand struct {
 	Stdin  io.Reader
 	Stdout io.Writer
@@ -44,7 +44,7 @@ func (cmd *PrintConfigCommand) Run(args ...string) error {
 
 	// Validate the configuration.
 	if err := config.Validate(); err != nil {
-		return fmt.Errorf("%s. To generate a valid configuration file run `freetsd-meta config > freetsdb.generated.conf`", err)
+		return fmt.Errorf("%s. To generate a valid configuration file run `freetsd_meta config > freetsdb.generated.conf`", err)
 	}
 
 	toml.NewEncoder(cmd.Stdout).Encode(config)
@@ -75,7 +75,7 @@ func (cmd *PrintConfigCommand) parseConfig(path string) (*Config, error) {
 
 var printConfigUsage = `Displays the default configuration.
 
-Usage: freetsd-meta config [flags]
+Usage: freetsd_meta config [flags]
 
     -config <path>
             Set the path to the initial configuration file.

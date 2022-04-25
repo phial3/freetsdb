@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/freetsdb/freetsdb/cmd/freetsd-meta/run"
+	"github.com/freetsdb/freetsdb/cmd/freetsd_meta/run"
 )
 
 func TestCommand_PIDFile(t *testing.T) {
@@ -25,22 +25,23 @@ func TestCommand_PIDFile(t *testing.T) {
 	os.Setenv("FREETSDB_DATA_WAL_DIR", tmpdir)
 
 	cmd := run.NewCommand()
-	cmd.Getenv = func(key string) string {
-		switch key {
-		case "FREETSDB_DATA_DIR":
-			return filepath.Join(tmpdir, "data")
-		case "FREETSDB_META_DIR":
-			return filepath.Join(tmpdir, "meta")
-		case "FREETSDB_DATA_WAL_DIR":
-			return filepath.Join(tmpdir, "wal")
-		case "FREETSDB_BIND_ADDRESS", "FREETSDB_HTTP_BIND_ADDRESS":
-			return "127.0.0.1:0"
-		case "FREETSDB_REPORTING_DISABLED":
-			return "true"
-		default:
-			return os.Getenv(key)
-		}
-	}
+	// cmd.Getenv = func(key string) string {
+	// 	switch key {
+	// 	case "FREETSDB_DATA_DIR":
+	// 		return filepath.Join(tmpdir, "data")
+	// 	case "FREETSDB_META_DIR":
+	// 		return filepath.Join(tmpdir, "meta")
+	// 	case "FREETSDB_DATA_WAL_DIR":
+	// 		return filepath.Join(tmpdir, "wal")
+	// 	case "FREETSDB_BIND_ADDRESS", "FREETSDB_HTTP_BIND_ADDRESS":
+	// 		return "127.0.0.1:0"
+	// 	case "FREETSDB_REPORTING_DISABLED":
+	// 		return "true"
+	// 	default:
+	// 		return os.Getenv(key)
+	// 	}
+	// }
+
 	if err := cmd.Run("-pidfile", pidFile, "-config", os.DevNull); err != nil {
 		t.Fatalf("unexpected error: %s", err)
 	}

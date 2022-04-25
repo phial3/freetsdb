@@ -6,15 +6,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
-	"github.com/gogo/protobuf/proto"
-	internal "github.com/freetsdb/freetsdb/cmd/freetsd-ctl/backup_util/internal"
+	internal "github.com/freetsdb/freetsdb/cmd/freetsd_ctl/backup_util/internal"
 	"github.com/freetsdb/freetsdb/services/snapshotter"
-	"io/ioutil"
-	"path/filepath"
+	"github.com/gogo/protobuf/proto"
 )
 
 //go:generate protoc --gogo_out=. internal/data.proto

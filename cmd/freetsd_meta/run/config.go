@@ -24,7 +24,7 @@ const (
 	DefaultHostname = "localhost"
 )
 
-// Config represents the configuration format for the freetsd-meta binary.
+// Config represents the configuration format for the freetsd_meta binary.
 type Config struct {
 	Meta    *meta.Config  `toml:"meta"`
 	Logging logger.Config `toml:"logging"`
